@@ -1,6 +1,7 @@
 #include <string.h>
 #include "internal.c"
 #include "external.c"
+#include "ioredirection.c"
 
 int findCMD(char ** args)
 {
@@ -23,7 +24,7 @@ int findCMD(char ** args)
         echo(args);
         return 1;
     }
-    else if(!strcmp(args[0],"environment")) {
+    else if(!strcmp(args[0],"environ")) {
         environment(args);
         return 1;
     }
@@ -36,6 +37,12 @@ int findCMD(char ** args)
         return 1;
     }
     else {
+        for (int i = 0; args[i]; i++) {
+            if (!strcmp(args[i], ">") || !strcmp(args[i], "<")) {
+                redirection(args);
+                return 1;
+            }
+        }
         if (external(args)==0) {
             return 0;
         } else {

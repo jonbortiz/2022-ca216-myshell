@@ -1,0 +1,5 @@
+dir
+echo hello
+cd testcd
+cd ..
+echo yup the fuck

@@ -38,3 +38,60 @@ void syserr(char * msg)   // report error code and abort
    fprintf(stderr,"%s: %s", strerror(errno), msg);
    abort();
 }
+
+int backgr_exe(char **args)
+{
+    // a char array of the possible internal commands a user can give
+    char *internal_cmds[] = {
+        "quit",
+        "clr",
+        "mkdir",
+        "help",
+        "dir",
+        "echo",
+        "environ",
+        "cd"
+    };
+    
+
+    // array of command's functions
+    int (*commands[]) (char **) = {
+        &quit,
+        &clear,
+        &makedir,
+        &help,
+        &dir,
+        &echo,
+        &enviro,
+        &cd,
+    };
+
+    int foundInt=0;
+
+    if(args[0] == NULL) // check if user has given a command
+    {
+        // user entered no command i.e. an empty command input
+        return 1;
+    }
+    else
+    {
+
+        pid_t pid = fork(); // creates a child process
+
+        for(int i=0; i<(sizeof(internal_cmds) / sizeof(char *)); i++) // loops through array of internal commands
+        {
+            if(!strcmp(args[0], internal_cmds[i])) // finds the command that matches the user's input
+            {
+                if(pid == -1)
+                {
+                    printf("Error: fork failed.");
+                }
+                else if(pid == 0)
+                {
+                    return (*commands[i])(args); // executes the given command
+                }
+            }
+        }
+
+    }
+}
