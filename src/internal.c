@@ -3,14 +3,15 @@
 #include <string.h>
 #include <unistd.h>
 #include "myshell.h"
+#include "internal.h"
 
 extern char **environ;
 char cwd[100];
 
-void setShell() {
-    getcwd(cwd, sizeof(cwd));
-    setenv("SHELL", strcat(cwd, "/myshell"), 1);
-}
+// void setShell() {
+//     getcwd(cwd, sizeof(cwd));
+//     setenv("SHELL", strcat(cwd, "/myshell"), 1);
+// }
 
 void clr() {
     system("clear");
@@ -32,6 +33,10 @@ void environment() {
     {
         printf("%s\n", environ[i]);
     }
+}
+
+void help() {
+    system("more ../manual/readme.md");
 }
 
 void echo(char *argv[]) {

@@ -3,4 +3,5 @@
 #define SEPARATORS " \t\n" // tokens will be separated by white spaces
 
 void tokeniseInput(char ** args, char ** arg, char *buff);
+void batch(char **argv, char ** args, char *buff, char ** arg);
 

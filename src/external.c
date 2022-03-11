@@ -29,6 +29,12 @@ int external(char ** args)
         execvp(args[0], args);
         syserr("exec");
     }
+    for(int i = 0; args[i]; i++) {
+        if(!strcmp(args[i], "&")) {
+            args[i] = NULL;
+            return 1;
+        }
+    }
     wait(NULL);
 
     pid = getpid();

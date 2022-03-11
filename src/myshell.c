@@ -3,7 +3,6 @@
 #include <string.h>
 #include "myshell.h"
 #include "commands.c"
-// #include "backgroundExecution.c"
 
 void batch(char **argv, char ** args, char *buff, char ** arg)
 {
@@ -55,11 +54,6 @@ int main(int argc, char **argv)
 
             if(fgets(buff, MAX_BUFFER, stdin)) {
                 tokeniseInput(args, arg, buff);
-                for(int i = 0; args[i]; i++) {
-                    if(!strcmp(args[i], "&")) {
-                        background_exec(argv, args, buff, arg);
-                    }
-                }
                 if(args[0]) {
                     if(findCMD(args)==0) {
                         break;

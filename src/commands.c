@@ -1,7 +1,10 @@
 #include <string.h>
 #include "internal.c"
 #include "external.c"
-#include "ioredirection.c"
+#include "internal.h"
+#include "commands.h"
+// #include "ioredirection.c"
+char cwd[100];
 
 int findCMD(char ** args)
 {
@@ -33,16 +36,33 @@ int findCMD(char ** args)
         return 1;
     }
     else if(!strcmp(args[0], "setShell")) {
-        setShell();
+        getcwd(cwd, sizeof(cwd));
+        setenv("SHELL", strcat(cwd, "/myshell"), 1);
+        return 1;
+    }
+    else if(!strcmp(args[0], "help")) {
+        help();
         return 1;
     }
     else {
-        for (int i = 0; args[i]; i++) {
-            if (!strcmp(args[i], ">") || !strcmp(args[i], "<")) {
-                redirection(args);
-                return 1;
-            }
-        }
+        // int inputSign = 0, outputSign = 0, redirectionFlag = 0;
+        // for (int i = 0; args[i]; i++) {
+        //     if (!strcmp(args[i], "<") || !strcmp(args[i], "<<")) {
+        //         redirectionFlag = 1;
+        //         inputSign = i;
+        //     }
+        //     else if (!strcmp(args[i], ">") || !strcmp(args[i], ">>")) {
+        //         redirectionFlag = 1;
+        //         outputSign = i;
+        //     }
+        // }
+        // if (redirectionFlag = 1) {
+        //     if (redirection(args, inputSign, outputSign)==0) {
+        //         return 0;
+        //     } else {
+        //         return 1;
+        //     }
+        // }
         if (external(args)==0) {
             return 0;
         } else {
