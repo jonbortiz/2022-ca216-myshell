@@ -1,3 +1,7 @@
+NOTE: MAKEFILE NOT WORKING, CAN BE COMPILED AND RUN BY:
+    gcc myshell.c -o myshell
+    ./myshell <arguments>
+
 NAME
 
     myshell
